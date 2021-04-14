@@ -40,9 +40,12 @@
 
 > 사용자 정의형도 가능 (파이선이 객체 지향 언어 장점을 취하고 있음)
 
++ 파이선 패키지
+ - 도트(.)를 사용하여 파이선 모듈을 계측적(디렉토리 구조)로 관리할 수 있도록 해주는 것.
+ - 파이선 패키지는 디렉토리와 파이선 모듈로 이루어져 있음
 
-
-
+ - 공동 작업이나 유지 보수 등 여러 면에서 유리
+ - 패키지 구조로 모듈을 만들면 다른 모듈과 이름이 겹치더라도 더 안전하게 사용이 가능
 
 
 
@@ -124,10 +127,133 @@ a[1:2] = ['wow', 'fantastic', 'python']  # 연속된 공간이 확장되면서 �
 b[1] = ['wow', 'fantastic', 'python']  # [1, ['wow', 'fantastic', 'python'], 3]
 
 
+[210414]
+for in : in 뒤에 쓰인 리스트 크기에 관계럾이 항상 모든 리스트에 대해 코드를 실행할 수 있음
+for in list : 이미 리스트가 존재, 그 목록에서 값을 하나씩 꺼내서 쓰기만 하면 될 때
+for in range : 횟수가 정해져 있거나 1씩 증가하는 숫자를 써야할 때 유용
+
+print('{}번 : {}'.format(i, name))  # {}에 .format으로 데이터 넣어서 콘솔
+
+데이터가 변동이 있을 경우 이에 따라 range()에 숫자를 변경하는 것은 불편
+=> len()
+for i in range(len(names)):
+    name = names[i]
+    print('{}번 : {}'.format(i + 1, name))
+
+enumrate : 순서와 리스트 안의 값을 한번에 처리할 수있도록 해주는 함수, 변수 두 개를 받는 반복문을 만들어 낼 수 있어서 편리함
+for i, name in enumerate(names):  # index번호, 인덱싱한 데이터 => 튜플
+    print('{}번 : {}'.format(i + 1, name))
 
 
+# 함수
+: 코드 조각에 기능별로 이름을 붙인 것으로 해당 기능을 쉽게 쓸 수 있도록 도와주는 역할
+: 반복되는 부분이 있을 경우, 추후에 호출될 가능성이 있을 경우 생성
+
+함수 구조 - 결과값이 없는 함수
+def 함수명(입력 인수):  # def(define)
+    수행문장~
+    ...
+함수 구조 2 - 결과값이 있는 함수 (return)
+def 함수명(입력 인수):
+    수행문장~
+    ...
+    return 결과값
+함수 구조 3 - 함수 입력값(매개변수)이 몇 개 인지 모를 경우
+def 함수명(*입력변수명(
+    <수행문장>
+    return
+
+내장함수 : import 하지 않고 즉시 사용 가능한 함수들
+            : 주의 - 내장 함수명을 일종의 키워드로 간주 
+            :      - 사용자(개발자)가 식별자 또는 사용자 정의 함수로 만들어서 사용
 
 
+# 모듈
+import math - 수학 기능
+    파이(math.pi), 올림(math.ceil), 내림(math.floor), 반올림(round, 자주 쓰여서 기본내장함수)
+import sys - 내 시스템에 접근하는 모듈
+    print(sys.argv) -> ['C:/Users/goott7/PycharmProjects/goott_python/module/moduleEx01.py']
+    sys.path - 어떤 환경에서 어떤 작업하는지 현재 환경 확인(pip으로 import 할 때 설정 오류 확인 등)
+import os
+    os.environ - 시스템의 정보를 딕셔너리 객체로 리턴
+    os.getcwd() - 현재 작업 위치
+    os.chdir - 디렉토리 변경
+    os.system('dir') - 커멘드 창 명령어
+    os.popen - 시스템 명령어를 수행한 결과값을 읽기모드의 파일 객체로 리턴
+    os.mkdir(디렉토리명) - 디렉토리 생성
+    os.rmdir(디렉토리명) - 디렉토리 삭제 (주의 - 디렉토리가 비어있어야 함)
+    os.unlink(파일명) - 파일 삭제
+    os.rename(src, dst) - src 이름 파일을 dst 이름으로 바꿈 
+import shutil
+    shutil.copy(src, dst) - src라는 이름으로 파일을 dst로 복사
+import time
+    time.time() : 초 단위로 리턴, 1970년 1월 1일 0시 0분 0초 기준으로 지난 시간 리턴
+                : UTC(Universal Time Coordinated - 세계 협정 표준시) 기준
+
+    time.localtime() : time.time()를 통해서 얻어온 실수값을 이용해서 년 월 일 시 분 초 형태로 바꿈
+    > struct_time 시퀀스 객체 속성
+        tm_year : 년도
+        tm_mon : 월(1~12)
+        tm_mday : 일
+        tm_hout : 시간 (0~23)
+        tm_min : 분
+        tm_sec : 초
+        tm_wday : 요일을 숫자로 표현 (월요일 : 0 ~ 일요일 : 6)
+        tm_dat : 1월 1일부터 누적된 날짜를 나타냄(1~366)
+        tm_isdst : 서머타임(일광절약 시간제 0, 1, -1)
+    time.gmtime : UTC 기준의 현재 시간, 얘도 struct로 나옴
+    time.asctime : 알아보기 쉬운 날짜와 시간을 반환
+    time.ctime : asctime과 같음
+    time.strftime : 시간을 나타내는 포맷을 지정해서 세밀하게 표현할 수 있는 함수
+    > 형식 지정자 (포맷코드)
+        %y 년도 축약(2021 -> 21), %Y (2021)
+        %a 요일 축약(Sun, ...), %A (Sunday, ...)
+        %b 월 축약, %B
+        %c 날짜와 시간을 출력 (21/01/01 13:08:00)
+        %d 날(day) - 01~31
+        %H 24시간 표현 - 0~23
+        %I 12시간 표현 - 01~12
+        %j 누적날짜를 표현 - 001~366
+        %m 월 - 01~12
+        %M 분 - 01~59
+        %P 오전/오후 - AM/PM
+        %S 초 - 00~60
+        %U 누적 주 - (일요일 시작 : 00~53)
+        %w 요일 - 0~6
+        %W 누적 주 - (일요일 시작 : 00~53)
+        %x 날짜 출력 - 21/01/01
+        %X 시간 출력 - 13:01:01
+        %Z 시간대 출력 - 대한민국 표준시
+            ex) print(time.strftime('%Y %m %d %X')) -> 2021 04 14 13:14:07
+                print(time.strftime('%Y %m %d %X', time.localtime(time.time())))  위와 같은 코드
+    time.sleep : 루프문 안에서 자주 사용됨. 일정한 시간 간격을 주기 위해 사용, 초단위임 ms아님
+import datetime  # time 모듈 기반으로 편하게 사용하도록
+    datetime.date.today() - date 밑에 함수들 있음
+import calendar  # 파이선에서 달력을 표시해주는 모듈
+    calendar.calendar(2021) - 해당 년도의 전체 달력을 출력
+    calendar.prcal(해당년도) - 해당년도의 전체 달력을 출력, 위의 calendar와 달리 print를 안써도 출력
+    calendar.prmonth(년도, 월) - 해당년도의 월만 출력
+    calendar.weekday(년도, 월, 일) - 입력받은 날짜의 요일을 반환
+    calendar.monthrange(년도, 월) - 입력받은 달의 1일이 무슨 요일인지를 출력 후, 그 달의 마지막 일자 반환(튜플)
+import random  # 난수 발생 모듈
+    random.random() - 0.0~1.0 실수
+import webbrowser  # 자신의 시스템에서 사용하는 기본 웹브라우저가 자동으로 실행되게 하는 모듈
+    webbrowser.open('http:/www.example.com')
+    webbrowser.open_new_tab('http:/www.example.com')
+import urllib.request       # 서버에서 봇이 계속 정보를 가져와야 크롤링?, 수동개념으로 작업하면 스크래핑
+                            # urllib의 request 요청객체(웹브라우저로부터 요청)
+    urllib.request.urlopen(url).read().decode('utf-8') - url열고 읽고 인코딩까지
+        => moduleEx02.py에서 웹에서 정보를 가져오는 함수와 그 동작 참고
+
+# java는 객체와 클래스가 같은데
+# 파이선은 객체 안에 클래스가 있는 형태
+    특정 함수나 클래스만 불러오기
+    from <모듈명> import <함수명>     from calculator import add  ->  이미 모듈을 호출한것이므로 calculator를 안쓰고 함수만 호출가능
+                                     from calculator import *
+
+파이선 패키지와 디렉토리 - 둘다 계층 나눔, 차이는 거의 없으나 디렉토리와 패키지를 구분하는 표시가 존재
+    디렉토리는 모아두는 용도, 경로만 생성, 디렉토리로 생성해도 __init__.py를 그 안에 생성하면 패키지가 된다.
+    패키지는 __init__.py가 경로에 자동생성됨, 설정 파일인듯
 
 
 
@@ -181,7 +307,38 @@ breakEx.py                  반복문 중 break, continue
 listEx01.py                 리스트에 들어갈 수 있는 요소들, 리스트 인덱싱, 리스트 슬라이싱, 연산, 반복, 수정, 삭제(del)
 listEx02.py                 리스트 관련 함수들
                             요소추가(append), 정렬(sort), 역정렬(reverse) 알파벳 역순(내림차순)이 아니고 있던 그대로의 역순서임에 유의
-                            위치반환(index), 
+                            위치반환(index), 요소삽입(insert), 요소제거(remove), 요소추출(pop), 요소갯수(count), 리스트확장(extend, +=)
+[210414]                    (listEx02.py 도 수정)
+<list> 경로
+forinList.py                for in list, for in range, 리스트 크기 변경 고려시 len(리스트) 사용(range에서), enumrate
+<function> 경로
+functionEx01                함수 구조1, 2
+functionEx02                함수 구조3
+<module_1> 경로
+moduleEx01.py               모듈     import math, sys, os, shutil, time
+moduleEx02.py               모듈2    import datetime, calendar, random, webbrowser, urllib.request
+<module_2> 경로
+diva.py                     파일 상단에 # coding: utf-8 => utf-8로 설정, 클래스, 생성자, 내부 함수 정의(사용자 정의 모듈 생성)
+moduleMain.py               diva 클래스 테스트, 클래스 호출, 호출 때 오류가 나면 소스로 바꾸면 된다??
+calculator.py               diva는 클래스였고 이 calculator는 함수(기능)만 모아둔 모듈
+moduleMain2.py              calculator 사용자 정의 모듈 테스트, 밑의 이름 긴 모듈을 호출할때 이름을 짧게 다른 이름(별칭)으로 호출
+thisisVeryLongNameModule.py 모듈 이름을 호출시 별칭으로 바꾸는 테스트용 모듈
+<package> 패키지             패키지를 생성하면 경로에 자동으로 __init__.py 생성됨
+package\cal\calculator2.py  minus만 만들어둔 모듈
+package\cal\calMain.py      패키지는 도트.로 관리하므로 현재 패키지 내의 모듈(.calculator2)를 import, 도트를 사용해서 명확하게 지정 가능
+                            위의 방식대로 상대주소로 import 실패, 절대주소 사용
+[210415] 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
