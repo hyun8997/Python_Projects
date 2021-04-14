@@ -32,30 +32,47 @@ print(str)
 c = [10, 20, 30, 40, 50]
 print(c.index(40))  #있으면 인덱스 번호로, 없으면 에러발생
 
+# 리스트에 요소 삽입 : insert
+# insert(x, y) : x번째 위치에 y값을 삽입
+c.insert(3, 4)
+print(c)
 
+# 리스트 요소 제거 : remove
+c.remove(4)  # 값을 탐색해서 지워줌
+print(c)
 
+c.insert(3, 40)
+print(c)
+c.remove(40)  # 중복값이 있을 시, 먼저 탐색된놈 하나만 지움
+print(c)
+c.remove(40)
+print(c)
 
+# 리스트 요소 꺼내기(추출) : pop
+d = [1, 2, 3]
+e = d.pop()
+print(d)
+print(e)  #추출된 3이 있음
 
+# pop(x) : x번째 요소를 삭제
+e = [1, 2, 3, 4, 5]
+e.pop(3)
+print(e)
 
+print('-------------------------------------------------')
+# 리스트에 포함된 요소의 갯수 세기 : count
+f = [10, 20, 30, 20, 20, 20]
+print(f.count(20))  # count에서 탐색해서 갯수 셈
 
+# 리스트 확장 :extend
+g = [1, 2, 3]
+g.extend([4, 5])
+print(g)
+g.extend([6, 7])
+print(g)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+g += [8, 9]
+print(g)
 
 
 
