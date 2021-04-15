@@ -255,6 +255,7 @@ import urllib.request       # 서버에서 봇이 계속 정보를 가져와야 
     디렉토리는 모아두는 용도, 경로만 생성, 디렉토리로 생성해도 __init__.py를 그 안에 생성하면 패키지가 된다.
     패키지는 __init__.py가 경로에 자동생성됨, 설정 파일인듯
 
+[210415]
 # dictionary : {name1 : value1, name2 : value2, ...}
     name1으로 value1을 출력가능
     name에는 리스트를 사용할 수 없지만 값에는 리스트 사용 가능
