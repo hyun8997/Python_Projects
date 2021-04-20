@@ -76,6 +76,7 @@
  
  
 4) CheckButton 위젯
+  다중 선택 가능
   # 체크버튼의 메소드
    - select() : 체크 상태
    - deselect() : 해제 상태
@@ -96,7 +97,222 @@
   선택지 
 
 6) RadioButton 위젯
-  다중 선택
+  다중 선택지중 하나만 선택 가능, 변수 하나로 묶인 애들 중 택일
+
+7) Text 위젯
+  여러 줄의 문자열을 출력하기 위한 위젯, 텍스트 에어리어 같음
+  Text 파라미터(tkinter 기준)
+    [ 텍스트 텍스트 설정 parameter ]
+    wrap	: 자동 줄 내림 설정(기본값 : char) - none, char, word)
+    tabs	: 텍스트의 Tab 간격을 설정(기본값: 56)
+    tabstyle	: 텍스트의 Tab 간격 형식(기본값: tabular) - tabular, wordprocessor
+    startline	: 텍스트의 데이터 저장소에 저장될 시작 라인
+    endline	: 텍스트의 데이터 저장소에 저장될 마지막 라인
+    spacing1	: 텍스트의 상단 수직 간격(기본값: 0)
+    spacing2	: 텍스트의 줄과 줄 사이 간격(기본값: 0)
+    spacing3	: 텍스트의 하단 수직 간격(기본값: 0)
+
+    [ 텍스트 형태 설정 parameter ]
+    width		:
+    height		:
+    relief		:
+    borderwidth = bd	:
+    background = bg	:
+    foreground = fg	:
+    insertwidth	: 텍스트의 키보드 커서 너비 (기본값 : 2)
+    insertborderwidth	: 텍스트의 키보드 커서 테두리 두께(기본값 : 0)
+    insertbackgorund	: 텍스트의 키보드 커서 색상
+    selectborderwidth	: 텍스트의 문자열 블록처리 테두리 두께
+    selectbackground	: 텍스트의 문자열 블록처리 배경 색상
+    selectforeground	: 텍스트의 문자열 블록처리 문자열 색상	
+    inactiveselectbackground	:
+    padx, pady 	: 안쪽 여백
+
+    [ 텍스트 형식 설정 parameter ]
+    font		: 텍스트의 문자열 글꼴 설정
+    cursor		: 텍스트의 마우스 커서 모양
+    xscrollcommand	: 텍스트의 가로 스크롤 객체 적용(Scrollbar위젯.set)
+    yscrollcommand	: 텍스트의 세로 스크롤 객체 적용(Scrollbar위젯.set)
+    exportselection	: 텍스트의 선택 항목 여부 설정(기본값 : True)
+    segrid		: 텍스트의 격자 크기 조정 설정(기본값 : False)
+
+    [ 텍스트 하이라이트 설정 parameter ]
+    highlightcolor		: 텍스트가 선택되었을 때 색상
+    highlightbackground		: 텍스트가 선택되지 안았을 때 색상
+    hightlightthickness		: 텍스트가 선택되었을 때 두께
+
+    [ 텍스트 동작 설정 parameter ]
+    takefocus		: Tab키를 이용해서 위젯 이동 허용 여부 (기본값 : False)
+    blockcursor	: 텍스트의 키보드 커서를 블록으로 사용(기본값 : False)
+    undo		: 텍스트의 실행 취소 사용 여부(기본값 : False)
+    maxundo		: 텍스트의 실행 취소 최대 횟수
+    autoseparators	: 텍스트의 실행 취소 자동 저장 여부(기본값 : True)
+
+  Text의 문자열 메소드
+    insert(index, "문자열")문자열 삽입
+    : index 위치에 문자열을 삽입
+
+    delete(start_index, end_index) 문자열 삭제  
+    : start_index부터 end_index까지의 문자열 삭제
+
+    get(start_index, end_index) 문자열 반환
+    : start_index부터 end_index까지의 문자열 반환
+
+    index(index) 인덱스 반환
+    : index가 음수 일 경우, 1.0으로 반환
+
+    see(index) 문자열 표시 반환
+    : index위치에 텍스트가 표시되면 True반환
+
+    ** index는 y.x 로 사용 : y줄 x번째 문자를 의미함
+    : 첫번째 줄 첫번째 문자 ==> 1.0
+
+  Text 마크 메소드
+    tag_add(tagname, start_index, end_index) 태그생성
+    : start_index부터 end_index까지의 tagname을 생성
+
+    tag_remove(tagname, start_index, end_index) 태그제거
+    : start_index부터 end_index까지의 tagname을 설정 제거
+
+    tag_delete(tagname) 태그삭제
+    :tagname의 설정 및 선언 삭제
+
+    tag_config(tagname, 파라미터1, 파라미터2, ..... )
+    : tagname의 범위 만큼 속성 설정
+
+8) ScrolledText 위젯
+  Text 위젯을 구현하면서 스크롤 기능을 추가한 위젯
+
+9) Frame 위젯
+  공간 분리할 때 사용
+  Frame 파라미터
+    [ 형태 설정 ]
+    width		: 프레임 너비
+    height		: 프레임 높이
+    relief		: 프레임 테두리 모양
+    background = bg	: 프레임 배경 색상
+    padx		: 프레임의 테두리와 내용의 가로 여백(기본값 : 1 )
+    pady		: 프레임의 테두리와 내용의 세로 여백(기본값 : 1 )
+
+    [ 형식 설정 ]
+    cursor		: 프레임의 마우스 커서 모양
+    class_		: 클래스 설정
+    visual		: 시각적 정보 설정
+    colormap		: 256 색상을 지정하는 색상 맵 설정
+
+    [ 하이라이트 설정 ]
+    highlightcolor
+    highlightbackground
+    highlightthickness
+
+    [ 동작 설정 ]
+    takefocus
+    container		: 응용프로그램이 포함될 컨테이너로 사용 여부(기본값 : False)
+
+10) ScrollBar 위젯
+  # 스크롤바 객체를 생성해서 적용할 위젯에 연결하는 형태로 사용
+  # 스크롤바와 연결된 위젯과는 서로 다른 객체이므로 프레임을 활용하여 사용 
+  Scrollbar 파라미터(tkinter 기준)
+    width		: 기본값은 17
+    relief		: 스크롤바의 테두리 모양(기본값: flat)
+    borderwidth
+    background = bg
+    elementborderwidth	: 스크롤 요소의 테두리 두께(기본값: -1)
+    orient		: 스크롤의 표시방향(기본값: vertical) - vertical, horizontal	
+
+  Scrollbar 형식 설정
+    cursor		: 스크롤바의 마우스 커서 모양
+
+  Scrollbar 상태 설정
+    activebackground	: active상태일 때 스크롤바의 배경 색상
+    activerelief	: active상태일 때 스크롤바의 테두리 모양
+
+  Scrollbar 하이라이트 설정
+    hightlightcolor	:
+    hightlightbackground
+    hightlightthickess	:
+
+  Scrollbar 동작 설정
+    tabkefocus
+    command
+    jump		: 스크롤이 동작할 때 마다 command callback 호출(기본값 : False)
+    repeatdelay	: 버튼이 눌러진 상태에서 command 실행까지의 대기시간(기본값 : 300 ms)
+    repeatinterval	: 버튼이 눌러진 상태에서 command 실행의 반복시간(기본값 : 100 ms)
+
+  Scrollbar 메소드
+    set			: 스크롤 부착 - 위젯에 스크롤바를 적용
+    set(좌측상단, 우측하단)	: 스크롤 부착
+    get			: (좌측상단, 우축하단)좌표를 리턴 - 현재 스크롤ㄹ바의 좌측상단 좌표와 우측하단 좌표를 리턴
+
+11) Listbox 
+  Listbox파라미터
+    [ 문자열 설정 ]
+    listvariable	: 리스트박스에 표시할 문자열을 가져올 변수
+
+    [ 형태 설정 ]	
+    width
+    height
+    relief
+    borderwidth
+    background
+    foreground
+    selectbackground	: 리스트박스 항목의 블록처리 배경 색상
+    selectforeground	: 리스트박스 항목의 블록처리 문자열 색상
+    selectborderwidth	: 리스트박스 항목의 블록 테두리 두께(기본값 : 0)
+
+    [ 형식 설정 ]
+    font		: 리스트박스의 문자열 글꼴 설정
+    cursor		
+    xscrollcommand	: 리스트박스의 가로스크롤 위젯 적용
+    yscrollcommand	: 리스트박스의 세로스크롤 위젯 적용
+    setgrid		: 리스트박스의 격자 크기 조정 설정 (기본값 : False)
+    exportselection	: 리스트박스간의 항목 선택 유지(기본값 : True)
+
+    [ 상태 설정 ]
+    state		: normal, readonly, disabled
+    disabledforeground	: disabled 상태일 때 리스트박스의 문자열 색상
+
+    [ 하이라이트 설정 ]
+    highlightcolor	: 리스트박스가 선택되었을 때 색상	
+    highlightbackground : 리스트박스가 선택되지 않았을 때 색상
+    highlightthickness	: 리스트박스가 선택되었을 때 두께
+
+    [ 동작 설정 ]
+    takefocus		:
+    activestyle	: 리스트박스의 선택된 항목의 표시형택(기본값 : underline) -none, dotbox, underline
+    selectmode	: 리스트박스의 항목 선택 방법(기본값 : browse) - browse, single, multiple, extended
+
+
+  Listbox 메소드
+    insert(index, "항목")		: index 위치에 항목을 추가
+    delete(index)		: 단일 항목을 삭제
+    delete(start_index, end_index)	: start_index부터 end_index까지의 항목 삭제
+    size()			: 항목 개수 반환
+    activate(index)		: index 위치의 항목을 선택
+    curselection()		: 선택된 항목을 튜플로 리턴
+    get(start_index, end_index)	: start_index부터 end_index까지의 항목을 튜플로 반환
+    index(index)		: index에 대응하는 위치 획득
+    nearest(index)		: 현재 보이는 리스트박스의 항목 중 index에 가장 가까운 값을 반환
+    see(index)			: index가 보이도록 리스트박스의 위치조정
+    xview()			: 가로 스크롤 연결
+    xview_scroll(num, str)	: 가로 스크롤의 속성 설정
+    xview_moveto(num)		: 가로 스크롤 이동(0~1)
+    yview()			: 세로 스크롤 연결
+    yview_scroll(num, str)	: 세로 스크롤 속성 설정
+    yview_moveto(num)		: 세로 스크롤 이동(0~1)
+
+
+> thread (비동기 프로그래밍)
+  # 비동기 프로그래밍 : 서로 간섭없이 독립적으로 작업을 진행할 수 있도록 하는 프로그래밍 기법
+                     : 이를 위해 파이선은 Thread 를 지원
+  # 파이선이 지원하는 쓰레드 사용 모듈 : _thread, threading
+
+  threading module
+    # threading.Thread() 객체를 호출
+    # Thread(target=쓰레드진입점, args=전달할인자(튜플형태))
+                               , kwargs=전달할인자{딕셔너리형태})
+    # 쓰레드 동작
+    # 쓰레드 
 
 
 
@@ -108,27 +324,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     
 
 
 
@@ -140,8 +336,9 @@ toolkit_exam.ipynb                과제 - 구구단, 로또
 [210419]
 <GUI>
 ToolKit2.ipynb                    위젯 파라미터 (tkinter 기준), CheckButton(4), ComboBox(5), RadioButton(6) 위젯
-
-
+ToolKit3.ipynb                    Text(7), ScrolledText(8), Frame(9), ScrollBar(10) 위젯
+threadEx.ipynb                    쓰레드 동작 2가지 - _thread, threading
+                                  스크래핑?
 
 
 
