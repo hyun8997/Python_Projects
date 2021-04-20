@@ -1,0 +1,165 @@
+[210419]
+파이선 GUI 프로그래밍을 위한 프레임워크 (ToolKit)
+  # 파이선에서 기본적으로 제공되는 표준 라이브러리
+   > Tkinter(Tk interface)
+    - Tcl(Tool Command Language)
+    - Tk (크로스 플랫폼에 쓰이는 GUI 툴킷)
+    - Tcl/Tk를 파이선에서 사용할 수 있도록 한 LightWeight GUI 모듈
+
+   > PyQt
+    : 파이썬에서 Ot(The Qt Company) 프레임워크를 사용하도록 한 툴킷
+      (주의 - 오픈소스이지만 상업용으로 사용할 경우 라이선스 구매해야 함)
+   > Pyside
+   > PyGTK
+
+  # 자주 사용하는 라이브러리 : wxPython 라이브러리
+  
+  
+주요 위젯
+1) 라벨, 버튼 위젯
+  # tkinter 패키지는 위젯 없을 때는 기본 크기를 사용
+  # 위젯을 추가할 경우 일반적으로 위젯을 표시하는데 필요한 만큼의 공간을 사용하도록 최적화
+  윈도우창 크기 설정, win.geometry
+  
+2) 버튼 위젯
+  cf) tk를 이용한 위젯
+  
+    Grid
+      label.grid(column=0, row=0) --> label.pack()  대신 지정위치로
+      chkBtn1.grid(column=0, row=0, sticky=tk.W) # stricky : center가 없는 옵션
+      chkBtn2.grid(column=1, row=0, sticky='W')
+
+    이벤트 처리
+      button = ttk.Button(win, text='click', command=clickMe)  
+
+3) Entry 위젯 : 단순한 라인 텍스트 박스
+  # entry 위젯 parameter
+   - show  ex) (None | '*')
+   - textvariable : 입력박스(텍스트 박스)에 작성한 문자열을 가져올 변수
+   - justify : 입력박스의 문자열이 여러 줄일 경우 정렬 방법 (left, right, center - default는 center)
+
+  # 파이선은 동적 타입 언어 (할당된 데이터를 바탕으로 타입을 유추)
+    예를 들어 name 변수에 문자열을 할당하면 string 타입이 됨 (name='hong')
+              age 변수에 정수를 할당하면 integer 타입이 됨 (age=20)
+
+  # ttk은 파이선이 아닌 다른언어로 되어있는 모듈임. 단지 파이선에서 사용할 수 있을 뿐.
+    그러므로 파이선처럼 동적으로 타입을 유추하는 모듈이 아님.
+    타입 지정이 필요한 언어임에 유의
+
+
+[210420]
+위젯 파라미터 (tkinter 기준)
+  # 문자열 설정 파라미터
+   - text : 표시할 문자열
+   - textvariable : 표시할 문자열을 가져올 변수
+   - anchor : 위젯의 문자열 또는 이미지의 위치 지정(default : center)
+   - justify : 문자열이 여러줄일 경우 정렬 방법 (default : center)
+   - wraplength : 자동 줄 내림 설정 - 너비 (default : 0)
+
+  # 모양 설정 파라미터
+   - width : 너비
+   - height : 높이
+   - relief : 테두리 모양 (default : flat)
+   - overrelief : 마우스 오버시 테두리 모양 (default : raised)
+     -- relief option (flat, groove, ridge, solid, sunken)
+   - background (a.k.a bg) : 백그라운드 색상을 지정 (default : SystemButtonFace)
+   - foreground (a.k.a fg) : 문자열의 색상
+   - select color : 선택된 위젯의 배경 색
+   - padx(가로 안쪽 여백), pady(세로 안쪽 여백)
+
+  # 상태 설정 파라미터
+   - state : 상태 설정 (default : normal) -> (normal, active, disabled)
+   - command : active 상태일 때 실행하는 메소드(함수)를 지정
+   - variable : 동작상태를 저장할 제어 변수 (ex. tkinter.StringVar(), tkinter.IntVar())
+   - onvalue : active(체크) 상태일 때 연결된 제어변수의 값 (default : True)
+   - offvalue : 해제 상태일 때 연결된 제어변수의 값 (default : false)
+ 
+ 
+4) CheckButton 위젯
+  # 체크버튼의 메소드
+   - select() : 체크 상태
+   - deselect() : 해제 상태
+   - toggle() : 토글
+   - invoke() : 체크버튼 실행
+   - flash() : 깜빡거림
+
+  # 체크버튼의 형식 설정
+   - bitmap : 체크버튼에 포함할 기본 이미지
+   - image : 체크버튼에 포함할 임의의 이미지
+   - selectimage : 체크버튼이 체크 상태일 때 표시할 임의의 이미지
+   - compound : 체크버튼에 문자열과 이미지를 동시에 표시할 때 이미지의 위치 (default : none)
+              : button, center, left, right, top
+   - font : 체크버튼의 문자열 글꼴 설정
+   - cursor : 체크버튼 마우스 커서 모양
+
+5) ComboBox 위젯
+  선택지 
+
+6) RadioButton 위젯
+  다중 선택
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+[210419]
+<GUI>
+ToolKit.ipynb                     주요 위젯 - 라벨(1), 버튼(2), entry(3) 위젯, 이벤트 처리, grid를 통한 pack
+toolkit_exam.ipynb                과제 - 구구단, 로또
+[210419]
+<GUI>
+ToolKit2.ipynb                    위젯 파라미터 (tkinter 기준), CheckButton(4), ComboBox(5), RadioButton(6) 위젯
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
