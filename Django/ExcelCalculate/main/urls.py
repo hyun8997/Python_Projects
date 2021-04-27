@@ -12,4 +12,7 @@ urlpatterns = [
     path('result', views.result, name='main_result'),  # /result
 
     path('signup/join', views.join, name='main_join'),
+    path('signin/login', views.login, name='main_join'),
+    path('logout', views.logout, name='main_logout'),
+    path('loginFail', views.loginFail, name='main_loginFail'),
 ]
