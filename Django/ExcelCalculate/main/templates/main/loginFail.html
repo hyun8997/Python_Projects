@@ -31,6 +31,7 @@
 </head>
 <body>
     <div class="container">
+        <!--헤더-->
         <div class="header">
             <div class="page-header">
                 <h1>
@@ -39,22 +40,22 @@
                 </h1>
             </div>
         </div>
-        <div class="content">
-            <div class="mainDiv">
-                <h4>회원가입을 위해 입력하신 이메일로 인증코드를 보냈습니다.</h4>
-                <h3>이메일로 전송된 메일의 인증코드를 입력해주세요.</h3><br>
-                <form action="verify" method="POST">{% csrf_token %}
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">인증코드</span>
-                        <input name='verifyCode' type="text" class="form-control" placeholder="인증코드를 적어주세요." aria-describedby="basic-addon1">
-                    </div><br>
-                    <input type="submit" class="btn btn-success btn-lg" value="인증하기">
-                </form>
-            </div>
+
+        <!--추가한 로그인 실패 내용-->
+        <div class=body">
+            <h1>로그인 실패</h1>
+            <h3>아이디 또는 비밀번호가 틀렸습니다. 다시 한번 확인해주세요</h3>
+            <a href="/signin" class="btn-default btn-xs" style="...">로그인 화면</a>
         </div>
+
+        <!--푸터-->
         <div class="panel-footer">
             Django - goott7
         </div>
+
+
     </div>
 </body>
-</html>
+
+
+
