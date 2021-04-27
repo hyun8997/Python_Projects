@@ -6,8 +6,13 @@ from sendEmail.views import *
 # main views.py
 
 def index(request):
-    return render(request, 'main/index.html')  # templates를 바로 찾아온다
+    # session의 user_name 세션에 존재 하는지
+    if 'user_name' in request.session.keys():  # dict의 key로 찾아오는 것
+        return render(request, 'main/index.html')  # templates를 바로 찾아온다
                                     # 앱 자신의 템플릿임을 확인키위해 main이름또 쓰는 것
+    else:
+        return redirect('main_signin')
+    
 def signup(request):
     return render(request, 'main/signup.html')
 
