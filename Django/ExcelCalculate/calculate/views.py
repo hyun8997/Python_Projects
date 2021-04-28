@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse  # 응답 객체
 import pandas as pd  # pandas 추가
 
 # calculate views.py
 
-def calculate(request): #요청만 열어둠
+def calculate(request): #요청만 열어둠, 데이터 분석까지 있음
     file = request.FILES['fileInput']  # 파일 자체를 업로드한게 아니고 정보를 담아둔 것
     # 파일은 DB에 올리는거랑 서버에 올리는거랑 다르다.
 
@@ -36,21 +36,23 @@ def calculate(request): #요청만 열어둠
     grade_calculate_dic = {}
     for key in grade_dic.keys():
         grade_calculate_dic[key] = {}
-        grade_calculate_dic[key]['min'] = min(grade_dic[key])
-        grade_calculate_dic[key]['max'] = max(grade_dic[key])
+        grade_calculate_dic[key]['min'] = min(grade_dic[key])  # 이 함수들은 numpy사용
+        grade_calculate_dic[key]['max'] = max(grade_dic[key])  # django가 잘 인식 못함(numpy int64 오류  )
         grade_calculate_dic[key]['avg'] = float(sum(grade_dic[key])/len(grade_dic[key]))
 
     #print(list(grade_calculate_dic.keys()))
 
     print('------------------------------')
+
+    ######데이터 확인#######
     grade_list = list(grade_calculate_dic.keys())
     grade_list.sort()   # 딕셔너리라서 key의 순서가 보장되지 않음
-
-    for key in grade_list:
-        print('--- grage --- ', key)
-        print('-- min : ', grade_calculate_dic[key]['min'], end=' ')
-        print('-- max : ', grade_calculate_dic[key]['max'], end=' ')
-        print('-- avg : ', grade_calculate_dic[key]['avg'], end='\n')
+    #
+    # for key in grade_list:
+    #     print('--- grage --- ', key)
+    #     print('-- min : ', grade_calculate_dic[key]['min'], end=' ')
+    #     print('-- max : ', grade_calculate_dic[key]['max'], end=' ')
+    #     print('-- avg : ', grade_calculate_dic[key]['avg'], end='\n')
 
     print('------------------------------------')
 
@@ -70,11 +72,24 @@ def calculate(request): #요청만 열어둠
 
         print(domain_dic.keys(), '--', domain_dic.values())
 
-    for key in domain_dic.keys():   # 도메인 딕셔너리 출력
-        print(key, ':', domain_dic[key])
+    ######데이터 확인#######
+    # for key in domain_dic.keys():   # 도메인 딕셔너리 출력
+    #     print(key, ':', domain_dic[key])
+    #
+    # for key in domain_dic.keys():  # 2개 이상인 도메인 출력하기
+    #     if domain_dic[key] > 1:
+    #         print(key)
 
-    for key in domain_dic.keys():  # 2개 이상인 도메인 출력하기
-        if domain_dic[key] > 1:
-            print(key)
 
-    return HttpResponse('calculate views - calculate function()')
+    grade_calculate_dic_session = {}
+    for key in grade_list:
+        grade_calculate_dic_session[int(key)] = {}  # key가 int임을 명시
+        grade_calculate_dic_session[int(key)]['min'] = float(grade_calculate_dic[key]['min'])
+        grade_calculate_dic_session[int(key)]['max'] = float(grade_calculate_dic[key]['max'])
+        grade_calculate_dic_session[int(key)]['avg'] = float(grade_calculate_dic[key]['avg'])
+
+    request.session['grade_calculate_dic'] = grade_calculate_dic_session
+    request.session['email_domain_dic'] = domain_dic
+
+    # return HttpResponse('calculate views - calculate function()')
+    return redirect('/result')
