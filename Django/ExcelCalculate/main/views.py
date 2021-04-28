@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect  # redirect 추가
 from .models import *
 from random import *
 from sendEmail.views import *
+import hashlib  # SHA256 방식으로 암호화 (내부모듈로 제공되는 것 중 가장 보안성 높음)
+
 
 # main views.py
 
@@ -12,7 +14,6 @@ def index(request):
                                     # 앱 자신의 템플릿임을 확인키위해 main이름또 쓰는 것
     else:
         return redirect('main_signin')
-    
 def signup(request):
     return render(request, 'main/signup.html')
 
@@ -26,14 +27,30 @@ def verify(request):
     return redirect('main_index')  # 뷰는 없고 기능만 있으면 되는데, 아직은 메인으로 바로 보냄
 
 def result(request):
-    return render(request, 'main/result.html')
+    if 'user_name' in request.session.keys():  #로그인 확인
+        content = {}
+        content['grade_calculate_dic'] = request.session['grade_calculate_dic']  #session에 넣어둔 분석 데이터 꺼내오기
+        content['email_domain_dic'] = request.session['email_domain_dic']
+        del request.session['grade_calculate_dic']  #session 정리
+        del request.session['email_domain_dic']
+        return render(request, 'main/result.html', content)  # content넣어서 보냄
+    else:
+        return redirect('main_signin')
 
 def join(request):
     #print('request:', request)
     name = request.POST['signupName']  # signup.html에서 주는 이름 그대로
     email = request.POST['signupEmail']
     pw = request.POST['signupPW']
-    user = User(user_name=name, user_email=email, user_password=pw)  # 모델 데이터 넣기
+
+    # pw 암호화 (SHA 256)
+    encode_pw = pw.encode()  # pw 엔코딩
+    encrypted_pw = hashlib.sha256(encode_pw).hexdigest()  # sha256으로 엔코딩된 pw 암호화하고 hex?
+    # print('encrypted_pw', encrypted_pw)
+
+    # 회원 입력
+    # user = User(user_name=name, user_email=email, user_password=pw)
+    user = User(user_name=name, user_email=email, user_password=encrypted_pw)  # 모델 데이터 넣기
     user.save()  # db에 넣기
 
     # 인증 코드 관련 4자리 정수로 생성 - 랜덤
@@ -51,8 +68,8 @@ def join(request):
     else:
         return HttpResponse('이메일 발송에 실패했습니다.')
 
-    #return redirect('main_verifyCode')  # 요청 출력하고 이메일 코드확인 페이지까지
-    #return response
+    # return redirect('main_verifyCode')  # 요청 출력하고 이메일 코드확인 페이지까지
+    # return response
 
 def verify(request):
     user_code = request.POST['verifyCode']  # verifyCode.html에서 저 이름으로 넘어올 것임
@@ -91,8 +108,12 @@ def login(request):
         return redirect('main_loginFail')
 
     # 이메일 체크해서 있으면 넘어오는 곳임, 없으면 에러처리로 실패화면이동함
-    # 비밀번호 일치 여부
-    if user.user_password == loginPw:
+    # 비밀번호 일치 여부 (암호화 된 비밀번호)
+    encode_pw = loginPw.encode()
+    encrypted_pw = hashlib.sha256(encode_pw).hexdigest()
+    # if user.user_password == loginPw:
+    if user.user_password == encrypted_pw:
+        # 좌측 db의 엔코딩된 비밀번호, 우측 유저가 로그인을 위해 입력한 비번 엔코딩
         request.session['user_name'] = user.user_name
         request.session['user_email'] = user.user_email
         return redirect('main_index')
@@ -101,13 +122,14 @@ def login(request):
 
 def loginFail(request):
     return render(request, 'main/loginFail.html')
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
